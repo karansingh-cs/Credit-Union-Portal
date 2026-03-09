@@ -1,6 +1,7 @@
 ﻿using CreditUnionPortal.Data;
 using CreditUnionPortal.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CreditUnionPortal.Controllers
 {
@@ -14,6 +15,16 @@ namespace CreditUnionPortal.Controllers
         public IActionResult Index() {
             var members = _context.Members.ToList();
             return View(members);
+        }
+        public IActionResult Details(int id)
+        {
+            var member = _context.Members
+                .Include(m => m.Accounts)
+                .FirstOrDefault(m => m.MemberId == id);
+
+            if (member == null)
+                return NotFound();
+            return View(member);
         }
     }
 }

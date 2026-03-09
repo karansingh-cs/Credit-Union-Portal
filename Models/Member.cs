@@ -18,7 +18,7 @@ namespace CreditUnionPortal.Models
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
 
-        [Display(Name = "Sttaus")]
+        [Display(Name = "Status")]
         public string Status { get; set; } = "Active";
         [Display(Name = "Member Since")]
         public DateTime CreatedDate { get; set; } = DateTime.Now;

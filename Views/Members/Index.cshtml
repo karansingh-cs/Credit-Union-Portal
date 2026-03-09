@@ -1,0 +1,32 @@
+﻿@model IEnumerable<CreditUnionPortal.Models.Member> 
+@* tells the view what data it receives*@  
+
+@{
+    ViewData["Title"] = "Members";    @* sets the page title *@
+}
+
+<h2>
+    Members
+</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var member in Model)
+        {
+            <tr>
+                <td>@member.FirstName</td>
+                <td>@member.LastName</td>
+                <td>@member.Email</td>
+                <td>@member.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>

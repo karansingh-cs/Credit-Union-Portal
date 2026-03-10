@@ -26,6 +26,11 @@
                 <td>@member.LastName</td>
                 <td>@member.Email</td>
                 <td>@member.Status</td>
+                <td>
+                    @* Details - tell Razor which controller action to link to. Razor figures out the correct URL automatically.*@
+                    @*`asp-route-id="@member.MemberId"` This passes the member's id in the URL. It generates: /Members/Details/1 *@
+                    <a asp-action ="Details" asp-route-id="@member.MemberId">Details</a>
+                </td>
             </tr>
         }
     </tbody>

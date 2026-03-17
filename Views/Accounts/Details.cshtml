@@ -1,0 +1,31 @@
+﻿@model CreditUnionPortal.Models.Account
+
+@{ViewData["Title"] = "Account Details";}
+
+<p>Account Type : @Model.AccountType</p>
+<p>Balance : @Model.Balance.ToString("C")</p>
+<table>
+<thead>
+    <tr>
+        <th>Type</th> @*means Deposit or Withdrawal *@
+        <th>Balance</th>
+        <th>Description</th>
+        <th>Date</th>
+    </tr>
+</thead>
+
+<tbody>
+    @foreach (var transaction in Model.Transactions)
+    {
+        <tr>
+            <td>@transaction.Type</td>
+            <td>@transaction.Amount.ToString("C")</td>
+            <td>@transaction.Description</td>
+            <td>@transaction.TransactionDate.ToString("MM/dd/yyyy")</td>
+        </tr>
+    }
+
+</tbody>
+</table>
+
+<a asp-controller ="Members" asp-action="Details" asp-route-id="@Model.MemberId">Back to Member</a>

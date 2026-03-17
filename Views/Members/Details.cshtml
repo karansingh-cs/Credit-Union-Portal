@@ -7,14 +7,15 @@
 <p>Last Name : @Model.LastName</p>
 <p>Email : @Model.Email</p>
 <p>Status : @Model.Status</p>
-<p>Member Since date : @Model.CreatedDate</p>
+<p>Member Since date : @Model.CreatedDate.ToString("MM/dd/yyyy")</p>
 
 <table>
     <thead>
         <tr>
             <th>Account Type</th>
             <th>Balance</th>
-            <th>Opened Date</th></th>
+            <th>Opened Date</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -24,6 +25,7 @@
                 <td>@account.AccountType</td>
                 <td>@account.Balance.ToString("C")</td>
                 <td>@account.OpenedDate.ToString("MM/dd/yyyy")</td>
+                <td><a asp-controller="Accounts" asp-action="Details" asp-route-id="@account.AccountId">View</a></td>
             </tr>
         }
     </tbody>

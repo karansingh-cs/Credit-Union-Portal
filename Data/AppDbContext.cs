@@ -11,6 +11,17 @@ namespace CreditUnionPortal.Data
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Account>()
+                .Property(a => a.Balance)
+                .HasPrecision(18,2); // 18 is the standard for financial data in SQL Server, gives up to 16 digits before the decimal point
+
+            modelBuilder.Entity<Transaction>()
+                .Property(t => t.Amount)
+                .HasPrecision(18,2); // 2 = digits after the decimal point. Money always has two decimal places for cents
+        }
+
 
     }
 }

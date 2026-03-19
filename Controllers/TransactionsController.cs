@@ -1,5 +1,7 @@
 ﻿using CreditUnionPortal.Data;
+using CreditUnionPortal.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CreditUnionPortal.Controllers
 {
@@ -14,14 +16,28 @@ namespace CreditUnionPortal.Controllers
 
         public IActionResult AddTransaction(int accountId)
         {
-            return View();
+            var account = _context.Accounts.FirstOrDefault(a => a.AccountId == accountId);
+            return View(account);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddTransaction(int accountId, Transactions transaction)
+        public IActionResult AddTransaction(int accountId, Transaction transaction)
         {
-            return View();
+            var account = _context.Accounts.FirstOrDefault(a => a.AccountId == accountId);
+            if (transaction.Type == "Withdrawal")
+            {
+                account.Balance = account.Balance - transaction.Amount;
+            }
+            else
+            {
+                account.Balance = account.Balance + transaction.Amount;
+            }
+            transaction.AccountId = accountId;
+            _context.Transactions.Add(transaction);
+            _context.SaveChanges();
+            return RedirectToAction("Details", "Accounts", new { id = accountId });
+ 
         }
 
     }

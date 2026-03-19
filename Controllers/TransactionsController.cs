@@ -12,6 +12,17 @@ namespace CreditUnionPortal.Controllers
             _context = context;
         }
 
-        //public IActionResult AddTra
+        public IActionResult AddTransaction(int accountId)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddTransaction(int accountId, Transactions transaction)
+        {
+            return View();
+        }
+
     }
 }

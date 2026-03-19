@@ -1,0 +1,13 @@
+﻿@model CreditUnionPortal.Models.Account
+
+@{
+    ViewData["Title"] = "Add Transaction";
+}
+
+
+<form asp-controller="Transactions" asp-action="AddTransaction" asp-route-accountId="@Model.AccountId" method="post">
+    <div>
+        <label asp-for="@Model.Member"></label>
+        <input asp-for="@Model" />
+    </div>
+</form>

@@ -1,13 +1,49 @@
-﻿@model CreditUnionPortal.Models.Account
+@model CreditUnionPortal.Models.Account
 
 @{
     ViewData["Title"] = "Add Transaction";
 }
 
+<h2>Add Transaction</h2>
+<h4>Account: @Model.AccountType | Balance: @Model.Balance.ToString("C")</h4>
 
 <form asp-controller="Transactions" asp-action="AddTransaction" asp-route-accountId="@Model.AccountId" method="post">
+    @Html.AntiForgeryToken()
+
     <div>
-        <label asp-for="@Model.Member"></label>
-        <input asp-for="@Model" />
+        <label for="Type">Type</label>
+        <select name="Type" id="Type">
+            <option value="">-- Select --</option>
+            <option value="Deposit">Deposit</option>
+            <option value="Withdrawal">Withdrawal</option>
+        </select>
+        @Html.ValidationMessage("Type", new { style = "color:red;" })
+    </div>
+
+    <div>
+        <label for="Amount">Amount</label>
+        <input type="number" name="Amount" id="Amount" step="0.01" min="0.01" />
+        @Html.ValidationMessage("Amount", new { style = "color:red;" })
+    </div>
+
+    <div>
+        <label for="Description">Description</label>
+        <input type="text" name="Description" id="Description" maxlength="100" />
+        @Html.ValidationMessage("Description", new { style = "color:red;" })
+    </div>
+
+    <div>
+        <label for="TransactionDate">Date</label>
+        <input type="date" name="TransactionDate" id="TransactionDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+    </div>
+
+    <div>
+        <button type="submit">Submit</button>
+        <a asp-controller="Accounts" asp-action="Details" asp-route-id="@Model.AccountId">Cancel</a>
     </div>
 </form>
+
+@section Scripts {
+    @* client-side validation *@
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

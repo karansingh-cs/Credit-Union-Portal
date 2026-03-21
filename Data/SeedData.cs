@@ -77,7 +77,7 @@ namespace CreditUnionPortal.Data
             var singhChecking = context.Accounts.First(a => a.MemberId == singh.MemberId && a.AccountType == "Checking");
 
             context.Transactions.AddRange(
-                new Transaction
+                new Transaction 
                 {
                     AccountId = johnSavings.AccountId,
                     Amount = 120.00m,

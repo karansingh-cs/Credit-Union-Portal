@@ -24,20 +24,25 @@ namespace CreditUnionPortal.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddTransaction(int accountId, Transaction transaction)
         {
-            var account = _context.Accounts.FirstOrDefault(a => a.AccountId == accountId);
+            // Return the form with errors if validation fails
+            if (!ModelState.IsValid)
+            {
+                var account = _context.Accounts.FirstOrDefault(a => a.AccountId == accountId);
+                return View(account);
+            }
+
+            var acc = _context.Accounts.FirstOrDefault(a => a.AccountId == accountId);
+
             if (transaction.Type == "Withdrawal")
-            {
-                account.Balance = account.Balance - transaction.Amount;
-            }
+                acc.Balance -= transaction.Amount;
             else
-            {
-                account.Balance = account.Balance + transaction.Amount;
-            }
+                acc.Balance += transaction.Amount;
+
             transaction.AccountId = accountId;
             _context.Transactions.Add(transaction);
             _context.SaveChanges();
+
             return RedirectToAction("Details", "Accounts", new { id = accountId });
- 
         }
 
     }
